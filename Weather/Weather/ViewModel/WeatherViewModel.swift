@@ -13,6 +13,7 @@ final class WeatherViewModel {
     private let locationService: LocationServiceProtocol
     
     var onUpdate: () -> () = {}
+    var onShowAlert: (String, String) -> () = { _,_ in }
     var cityName: String = ""
     var tempType: TempType = .celsius
     var header: WeatherHeaderViewModel!
@@ -32,12 +33,22 @@ final class WeatherViewModel {
     }
     
     func locationButtonDidSelect(){
-        locationService.retriveCurrentLocation { [weak self] (location, err) in
-            guard let self = self, err == nil else { return }
-            guard let location = location else { return }
-            self.weatherService.getWeatherForCurrentLocation(
-                with: location, completion: self.weatherCompletionHandler(weather: error:)
-            )
+        locationService.retriveCurrentLocation { [weak self] (location, error) in
+            guard let self = self else { return }
+            
+            if let error = error{
+                if error == .accessDenied{
+                    self.onShowAlert(Alert.locationAccessIsDenied.0, Alert.locationAccessIsDenied.1)
+                }else if error == .failedRequest{
+                    self.onShowAlert(Alert.locationRequestWasFailed.0, Alert.locationRequestWasFailed.1)
+                }
+            }
+            
+            if let location = location {
+                self.weatherService.getWeatherForCurrentLocation(
+                    with: location, completion: self.weatherCompletionHandler(weather: error:)
+                )
+            }
         }
     }
     
@@ -53,9 +64,13 @@ final class WeatherViewModel {
         
     }
     
-    private func weatherCompletionHandler(weather: Weather?, error: Error?){
-        guard error == nil else {
-            //Here we can handel the error
+    private func weatherCompletionHandler(weather: Weather?, error: HTTPError?){
+        if let error = error {
+            if error == .invalidResponse{
+                onShowAlert(Alert.cityNotFound.0, Alert.cityNotFound.1)
+            }else{
+                onShowAlert(Alert.connectionWasLost.0, Alert.connectionWasLost.1)
+            }
             return
         }
         
@@ -65,5 +80,6 @@ final class WeatherViewModel {
         onUpdate()
     }
 }
+
 
 

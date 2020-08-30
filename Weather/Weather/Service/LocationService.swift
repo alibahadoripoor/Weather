@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-typealias LocationCompletion = (Location?, Error?) -> ()
+typealias LocationCompletion = (Location?, LocationError?) -> ()
 
 protocol LocationServiceProtocol: class {
     func retriveCurrentLocation(completion: @escaping LocationCompletion)
@@ -32,6 +32,7 @@ final class LocationService: NSObject, CLLocationManagerDelegate, LocationServic
         
         if(status == .denied || status == .restricted || !CLLocationManager.locationServicesEnabled()){
             // show alert to user telling them they need to allow location data to use some feature of your app
+            completion(nil, .accessDenied)
             return
         }
         
@@ -54,6 +55,6 @@ final class LocationService: NSObject, CLLocationManagerDelegate, LocationServic
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        completion?(nil, error)
+        completion?(nil, .failedRequest)
     }
 }

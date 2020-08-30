@@ -26,6 +26,12 @@ final class WeatherViewController: UIViewController {
             self.headerView.updateHeader(with: self.viewModel.header)
             self.tableView.reloadData()
         }
+        
+        viewModel.onShowAlert = { [weak self] (title, message) in
+            guard let self = self else { return }
+            self.showAlert(title, message: message)
+        }
+        
     }
 
 }

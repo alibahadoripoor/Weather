@@ -23,16 +23,16 @@ extension UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
         if height == nil{
             NSLayoutConstraint.activate([
-                self.topAnchor.constraint(equalTo: topView.safeAreaLayoutGuide.bottomAnchor),
-                self.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                self.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-                self.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+                self.topAnchor.constraint(equalTo: topView.bottomAnchor),
+                self.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                self.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                self.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
         }else{
             NSLayoutConstraint.activate([
-                self.topAnchor.constraint(equalTo: topView.safeAreaLayoutGuide.bottomAnchor),
-                self.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                self.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+                self.topAnchor.constraint(equalTo: topView.bottomAnchor),
+                self.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                self.trailingAnchor.constraint(equalTo: view.trailingAnchor),
                 self.heightAnchor.constraint(equalToConstant: height!)
             ])
         }

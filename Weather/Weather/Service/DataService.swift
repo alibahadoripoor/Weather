@@ -36,7 +36,7 @@ final class DataService: DataServiceProtocol{
                 
                 guard response.statusCode == 200 else {
                     debugPrint("Failure response: \(response.statusCode)")
-                    completion(nil, .failedRequest)
+                    completion(nil, .invalidResponse)
                     return
                 }
                 
