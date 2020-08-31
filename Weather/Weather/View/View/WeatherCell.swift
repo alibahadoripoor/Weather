@@ -13,6 +13,8 @@ final class WeatherCell: UITableViewCell {
     weak var parent: WeatherViewController!
     var index: Int!
     
+    //MARK: Outlets
+    
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
@@ -21,6 +23,8 @@ final class WeatherCell: UITableViewCell {
         // Initialization code
         backgroundColor = .clear
     }
+    
+    //MARK: Actions
 
     @IBAction func chartButton(_ sender: UIButton) {
         parent.viewModel.chartButtonDidSelect(at: index)

@@ -16,6 +16,8 @@ final class SearchView: UIView {
     private let searchTextField = UITextField()
     private let goButton = UIButton()
     
+    //MARK: Inits
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -24,6 +26,8 @@ final class SearchView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //MARK: UI Functions
     
     private func configureUI(){
         backgroundColor = .myBlue
@@ -95,6 +99,8 @@ final class SearchView: UIView {
         ])
     }
     
+    //MARK: Actions
+    
     @objc private func locationButtonDidSelect(){
         parent.viewModel.locationButtonDidSelect()
     }
@@ -105,6 +111,8 @@ final class SearchView: UIView {
         searchTextField.text = ""
     }
 }
+
+//MARK: Search Text Field Delegate
 
 extension SearchView: UITextFieldDelegate{
     func textFieldDidChangeSelection(_ textField: UITextField) {

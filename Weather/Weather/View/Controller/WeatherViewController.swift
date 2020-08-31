@@ -17,6 +17,8 @@ final class WeatherViewController: UIViewController {
     private let headerView = WeatherHeader()
     private let cellId = "WeatherCellID"
     
+    //MARK: View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -35,6 +37,8 @@ final class WeatherViewController: UIViewController {
     }
 
 }
+
+//MARK: Table View Delegate and Data Source
 
 extension WeatherViewController: UITableViewDelegate, UITableViewDataSource{
     
@@ -63,6 +67,8 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource{
 }
 
 extension WeatherViewController{
+    
+    //MARK: UI Functions
     
     private func configureUI(){
         view.backgroundColor = .myBlue

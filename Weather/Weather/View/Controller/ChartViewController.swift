@@ -19,6 +19,8 @@ final class ChartViewController: UIViewController {
         return UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
     }
     
+    //MARK: View Life Cycle
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         configureUI()
@@ -33,10 +35,18 @@ final class ChartViewController: UIViewController {
         debugPrint("deinit from Chart View Controller")
     }
     
+    //MARK: Detect Changing The Orientation
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         setupChartViewLayout()
     }
+    
+}
+
+extension ChartViewController{
+    
+    //MARK: UI Functions
     
     private func configureUI(){
         view.backgroundColor = .white
@@ -51,16 +61,11 @@ final class ChartViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
     }
     
-    @objc private func cancelButtonDidSelect(){
-        dismiss(animated: true, completion: nil)
-    }
-    
     private func setupChartView(with width: CGFloat){
         chartView.xAxis.enabled = false
         chartView.rightAxis.enabled = false
         setupChartViewLayout()
         view.addSubview(chartView)
-        
     }
     
     private func setupChartViewLayout(){
@@ -89,6 +94,12 @@ final class ChartViewController: UIViewController {
         
         let data = BarChartData(dataSet: dataSet)
         chartView.data = data
+    }
+    
+    //MARK: Actions
+    
+    @objc private func cancelButtonDidSelect(){
+        dismiss(animated: true, completion: nil)
     }
     
 }

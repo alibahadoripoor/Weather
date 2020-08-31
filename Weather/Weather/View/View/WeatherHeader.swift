@@ -12,6 +12,8 @@ final class WeatherHeader: UIView {
     
     weak var parent: WeatherViewController!
 
+    //MARK: Outlets
+    
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var tempTypeSwitch: UISwitch!{
@@ -23,6 +25,8 @@ final class WeatherHeader: UIView {
         }
     }
     
+    //MARK: Inits
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .myLightBlue
@@ -33,6 +37,8 @@ final class WeatherHeader: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: Setup Nib File
+    
     private func setupNib() {
         let bundle = Bundle.init(for: WeatherHeader.self)
         if let viewsToAdd = bundle.loadNibNamed("WeatherHeader", owner: self, options: nil),
@@ -42,6 +48,8 @@ final class WeatherHeader: UIView {
             contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         }
     }
+    
+    //MARK: Actions
     
     @IBAction func tempTypeValueChanged(_ sender: UISwitch) {
         if sender.isOn{
