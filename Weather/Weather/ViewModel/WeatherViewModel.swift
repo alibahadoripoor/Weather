@@ -12,12 +12,15 @@ final class WeatherViewModel {
     private let weatherService: WeatherServiceProtocol
     private let locationService: LocationServiceProtocol
     
-    var onUpdate: () -> () = {}
-    var onShowAlert: (String, String) -> () = { _,_ in }
-    var cityName: String = ""
-    var tempType: TempType = .celsius
+    var coordinator: WeatherCoordinator?
+    
+    private var weathers: [Weather] = []
     var header: WeatherHeaderViewModel!
     var cells: [WeatherCellViewModel] = []
+    var cityName: String = ""
+    var tempType: TempType = .celsius
+    var onUpdate: () -> () = {}
+    var onShowAlert: (String, String) -> () = { _,_ in }
     
     init(weatherService: WeatherServiceProtocol = WeatherService(),
          locationService: LocationServiceProtocol = LocationService()) {
@@ -61,7 +64,7 @@ final class WeatherViewModel {
     }
     
     func chartButtonDidSelect(at index: Int){
-        
+        coordinator?.showChartViewController(for: weathers[index], tempType: tempType)
     }
     
     private func weatherCompletionHandler(weather: Weather?, error: HTTPError?){
@@ -75,6 +78,7 @@ final class WeatherViewModel {
         }
         
         guard let weather = weather else { return }
+        weathers.insert(weather, at: 0)
         header = WeatherHeaderViewModel(weather: weather, tempType: tempType)
         cells.insert(WeatherCellViewModel(weather: weather, tempType: tempType), at: 0)
         onUpdate()
